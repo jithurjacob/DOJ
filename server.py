@@ -1,5 +1,5 @@
 from flask import Flask,make_response,render_template, request, jsonify, json
-import os, sys, requests, json
+import os
 from flask_restful import reqparse, abort, Api, Resource
 from flask.ext.assets import Bundle, Environment
 import sqlite3
