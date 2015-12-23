@@ -1,11 +1,3 @@
 flask
-sqlite3
-flask_restful
-rjsmin
-cssmin
-Flask-Assets
-Flask-Bundle
-Flask-Compressor
-Flask-RESTful
-Flask-SQLAlchemy
+
 
