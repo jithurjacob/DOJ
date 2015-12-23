@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>DOJ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+    
+    {% assets "css_all" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />
+    {% endassets %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
+</head>
+
+<body ng-app="myApp" ng-controller="collegeCtrl">
+    <!-- start -->
+    <div class="bw" ng-controller="studentCtrl">
+        <h1 class="ta">Cognizant 2015 Freshers</h1>
+        <div class="anv alg ala">
+            <h3 class="anw anx">Quick stats</h3>
+        </div>
+        <div class="fu db aln">
+            <div class="gj ali">
+                <div class="ako ale">
+                    <canvas id="doughnut" class="ant" max-width="250" max-height="250" data-chart="doughnut" data-value="[{ value: {{ data[1] }}, color: '#1ca8dd', label: 'No Information' }, { value: {{ data[2] }}, color: '#B72E54', label: 'Waiting for DOJ' }, { value: {{ data[3] }}, color: '#1bc98e', label: 'Joined Cognizant' }, { value: {{ data[4] }}, color: '#C3C320', label: 'Not joining Cognizant' }]" data-segment-stroke-color="#252830">
+                    </canvas>
+                </div>
+                <strong class="dh">Statistics</strong>
+                <h3></h3>
+            </div>
+            <div class="gj ali">
+                <div class="ako ale">
+                    <canvas id="doughnut" class="ant" max-width="250" max-height="250" data-chart="doughnut" data-value="[ { value: {{ data[2] }}, color: '#B72E54', label: 'Waiting for DOJ' }, { value: {{ data[3] }}, color: '#1bc98e', label: 'Joined Cognizant' }, { value: {{ data[4] }}, color: '#C3C320', label: 'Not joining Cognizant' }]" data-segment-stroke-color="#252830">
+                    </canvas>
+                </div>
+                <strong class="dh">Statistics with known data</strong>
+                <h3></h3>
+            </div>
+            <div class="gj ali">
+                <h1>Total Students : {{ data[0] }}</h1>
+                <h2><blink>Waiting for DOJ : {{ data[2] }}</blink></h2>
+                <h3>Joined Cognizant : {{ data[3] }}</h3>
+                <h4>Information not available : {{ data[1] }}</h4>
+                <h5>Not joining Cognizant : {{ data[4] }}</h5>
+            </div>
+        </div>
+        <div class="anv alg ala">
+            <h3 class="anw anx">Quick stats</h3>
+        </div>
+        <div class="ud" id="loader_div" style="margin-bottom:100px; margin-left: 50%;" class="text-center">
+            <div class="ball-loader">
+                Loading...
+            </div>
+        </div>
+        <div class="ud">
+            <div class="eg">
+                <table id="main_table" class="cl" data-sort="table">
+                    <thead>
+                        <tr>
+                            <th class="header"><a ng-click="modOrder($event, 'name')">College Name</a></th>
+                            <th class="header"><a ng-click="modOrder($event, 'total')">Total Students</a></th>
+                            <th class="header"><a ng-click="modOrder($event, 'unknown')">Information Not Available</a></th>
+                            <th class="header"><a ng-click="modOrder($event, 'waiting')">Waiting For DOJ</a></th>
+                            <th class="header"><a ng-click="modOrder($event, 'joined')">Joined Cognizant</a></th>
+                            <th class="header"><a ng-click="modOrder($event, 'notjoining')">Not Joining Cognizant</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in colleges | orderBy: MultiOrder.orderArray">
+                            <td><a class="load_btn" ng-click='loadPeople(x.id,x.name)' data='{{"{{ x.id }}"}}'> {{"{{ x.name }}"}}</a></td>
+                            <td>{{"{{ x.total }}"}}</td>
+                            <td>{{"{{ x.unknown }}"}}</td>
+                            <td>{{"{{ x.waiting }}"}}</td>
+                            <td>{{"{{ x.joined }}"}}</td>
+                            <td>{{"{{ x.notjoining}}"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="docsModal" class="cb fade modal-wide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="ri">
+                        <button type="button" class="close" data-dismiss="modal" onclick="reload()">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel" data-id="">Example modal</h4>
+                    </div>
+                    <div class="modal-body" id="myModalBody">
+                        <div id="myModalLoader">
+                            <div id="blurringTextG">
+                                <div id="blurringTextG_1" class="blurringTextG">L</div>
+                                <div id="blurringTextG_2" class="blurringTextG">o</div>
+                                <div id="blurringTextG_3" class="blurringTextG">a</div>
+                                <div id="blurringTextG_4" class="blurringTextG">d</div>
+                                <div id="blurringTextG_5" class="blurringTextG">i</div>
+                                <div id="blurringTextG_6" class="blurringTextG">n</div>
+                                <div id="blurringTextG_7" class="blurringTextG">g</div>
+                            </div>
+                        </div>
+                        <p>
+                            <form class="form-inline ri" name="addstudForm" id="addstudForm">
+                                <div class="form-group gj" style="margin-right:10px">
+                                    <label class="sr-only" for="name">Name</label>
+                                    <input type="text" ng-required="true" ng-model='stuname' class="form-control" required="required" name="name" id="name" placeholder="Student Name">
+                                </div>
+                                <div class="checkbox gj" style="margin-right:10px">
+                                    <label>
+                                        <input id="nameCheck" ng-model='stuchecked' ng-required="true" type="checkbox" required="required"> Yes I've checked, his name is not in here.
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary" ng-click="addstudForm.$valid && addStudent()">Add Missing Student</button>
+                            </form>
+                        </p>
+                        <table class="cl table-striped table-hover" data-sort="table">
+                            <tr ng-repeat="x in students " data-id='{{ " {{ x.id }} " }}' data-status=''>
+                                <td>{{"{{ x.name }}"}}</td>
+                                <td data-ng-repeat="choice in choices">
+                                    <input id='status{{"{{ x.id }}"}}{{"{{ choice }}"}}' class="with-font" type="radio" name='status{{"{{ x.id }}"}}' ng-checked="( choice == x.status )" ng-value='{{"{{ choice }}"}}' value='{{"{{ choice }}"}}' ng-click='changed_(students.indexOf(x),choice,x.status)' />
+                                    <label for='status{{"{{ x.id }}"}}{{"{{ choice }}"}}' class="css-label"> {{"{{ choice }}"}}
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="rj">
+                        <div id="myModalResult" style="display:inline"></div>
+                        <button type="button" id="myModalBtn" class="ce fh" ng-click="save()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="https://github.com/jithurjacob/DOJ"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+    <!-- end -->
+    
+    {% assets "js_libs" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+    
+
+    <script>
+    
+    </script>
+</body>
+
+</html>

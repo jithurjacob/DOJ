@@ -1,0 +1,1 @@
+select clg, count(distinct name) as d from challenge group by clg order by d desc
