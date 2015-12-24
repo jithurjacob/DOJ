@@ -2,7 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+bk/
+doj.1/
 # C extensions
 *.so
 
@@ -109,3 +110,5 @@ $RECYCLE.BIN/
 *.lnk
 extract.py
 requirements.py
+cf.exe
+DOJ.zip
